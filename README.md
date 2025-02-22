@@ -111,7 +111,7 @@ Add the following script to your frontend to handle form submissions:
 
         try {
             const response = await fetch(
-                "https://contact-form-backend.kalytero.workers.dev/",
+                "https://contact-form-backend.your.workers.dev/", // Change!!!
                 {
                     method: "POST",
                     body: formData,
