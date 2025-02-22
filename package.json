@@ -1,0 +1,25 @@
+{
+	"name": "home-page-back",
+	"version": "0.0.0",
+	"private": true,
+	"scripts": {
+		"deploy": "wrangler deploy",
+		"dev": "wrangler dev",
+		"start": "wrangler dev",
+		"test": "jest",
+		"cf-typegen": "wrangler types"
+	},
+	"devDependencies": {
+		"@cloudflare/vitest-pool-workers": "^0.5.2",
+		"@cloudflare/workers-types": "^4.20241112.0",
+		"@types/dotenv": "^6.1.1",
+		"@types/jest": "^29.5.14",
+		"dotenv": "^16.4.5",
+		"formdata-node": "^6.0.3",
+		"jest": "^29.7.0",
+		"ts-jest": "^29.2.5",
+		"typescript": "^5.5.2",
+		"vitest": "^2.1.9",
+		"wrangler": "^3.60.3"
+	}
+}
