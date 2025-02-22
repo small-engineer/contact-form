@@ -1,20 +1,20 @@
 /**
- * レスポンスのエラーリスト
+ * List of response errors
  * - 400 Bad Request:
- *   - `Missing required fields` - 必須フィールド(name, email, message, turnstileToken)が不足している
- *   - `Invalid content type` - Content-Type が `multipart/form-data` でない
- *   - `Invalid name` - 名前が空か、50文字を超えている
- *   - `Invalid email address` - メールアドレスの形式が正しくない
- *   - `Invalid message content` - メッセージが空か、500文字を超えている
+ *   - `Missing required fields` - Required fields (name, email, message, turnstileToken) are missing
+ *   - `Invalid content type` - Content-Type is not `multipart/form-data`
+ *   - `Invalid name` - Name is empty or exceeds 50 characters
+ *   - `Invalid email address` - Email address is in an invalid format
+ *   - `Invalid message content` - Message is empty or exceeds 500 characters
  * - 403 Forbidden:
- *   - `Turnstile verification failed` - Turnstile トークンが無効
+ *   - `Turnstile verification failed` - The Turnstile token is invalid
  * - 405 Method Not Allowed:
- *   - `Method not allowed` - POST 以外の HTTP メソッドがリクエストされた
+ *   - `Method not allowed` - A non-POST HTTP method was requested
  * - 500 Internal Server Error:
- *   - `Failed to send message` - Discord へのメッセージ送信に失敗した
- *   - `Internal Server Error` - 予期しないエラーが発生した
+ *   - `Failed to send message` - Failed to send the message to Discord
+ *   - `Internal Server Error` - An unexpected error occurred
  * - 200 OK:
- *   - `Form submitted successfully!` - フォーム送信が成功した
+ *   - `Form submitted successfully!` - The form submission was successful
  */
 
 import { jsonResponse } from 'utils/jsonResponse';
@@ -23,9 +23,9 @@ import { verifyTurnstileToken } from 'utils/verifyTurnstileToken';
 import { sendToDiscord } from 'utils/sendToDiscord';
 
 /**
- * フォームデータのサニタイズ
- * @param input 入力データ
- * @returns サニタイズされたデータ
+ * Sanitizes form data
+ * @param input The input data
+ * @returns The sanitized data
  */
 function sanitize(input: string): string {
 	if (!input) return '';

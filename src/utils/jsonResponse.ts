@@ -2,11 +2,11 @@ import { ApiResponse } from '../types';
 import { corsHeaders } from './corsHeaders';
 
 /**
- * JSON形式のレスポンスを生成
- * @param body レスポンスボディ
- * @param status HTTPステータスコード
- * @param origin リクエスト元のオリジン
- * @returns JSONレスポンス
+ * Generates a JSON response
+ * @param body The response body
+ * @param status The HTTP status code
+ * @param origin The origin of the request
+ * @returns A JSON response
  */
 export function jsonResponse(body: ApiResponse, status: number, origin: string | null): Response {
 	return new Response(JSON.stringify(body), {

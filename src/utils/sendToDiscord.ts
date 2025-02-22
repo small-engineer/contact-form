@@ -1,10 +1,10 @@
 import { ContactFormData } from '../types';
 
 /**
- * Discordにお問い合わせデータを送信
- * @param webhookUrl DiscordのWebhook URL
- * @param data お問い合わせデータ
- * @returns 送信成功フラグ
+ * Sends contact form data to Discord
+ * @param webhookUrl The Discord webhook URL
+ * @param data The contact form data
+ * @returns A flag indicating whether the message was successfully sent
  */
 export async function sendToDiscord(
 	webhookUrl: string,
@@ -12,12 +12,13 @@ export async function sendToDiscord(
 ): Promise<boolean> {
 	const payload = {
 		content:
-			`**新しいお問い合わせが届きました**\n\n` +
-			`- **お名前:** ${data.name}\n` +
-			`- **メールアドレス:** ${data.email}\n` +
-			(data.corporateName ? `- **会社名:** ${data.corporateName}\n` : '') + // 追加
-			`- **メッセージ:** ${data.message}`,
+			`📩 **New Contact Form Submission!**\n\n` +
+			`👤 **Name:** ${data.name}\n` +
+			`📧 **Email:** ${data.email}\n` +
+			(data.corporateName ? `🏢 **Company:** ${data.corporateName}\n` : '') + // Optional company name
+			`💬 **Message:**\n${data.message}`,
 	};
+
 
 	const response = await fetch(webhookUrl, {
 		method: 'POST',

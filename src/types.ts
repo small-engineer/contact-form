@@ -1,35 +1,35 @@
 /**
- * お問い合わせフォームデータの型
+ * Type definition for contact form data
  */
 export interface ContactFormData {
-	/** お名前 */
+	/** Name */
 	name: string;
-	/** メールアドレス */
+	/** Email address */
 	email: string;
-	/** メッセージ */
+	/** Message */
 	message: string;
-	/** 会社名 */
+	/** Company name (optional) */
 	corporateName?: string;
-	/** Turnstileトークン */
+	/** Turnstile token */
 	turnstileToken: string;
 }
 
 /**
- * APIレスポンスの型
+ * Type definition for API response
  */
 export interface ApiResponse {
-	/** 成功時のメッセージまたはエラー時のメッセージ */
+	/** Message on success or error */
 	message?: string;
-	/** エラー時のエラーメッセージ */
+	/** Error message on failure */
 	error?: string;
 }
 
 /**
- * Turnstile検証結果の型
+ * Type definition for Turnstile verification response
  */
 export interface TurnstileVerifyResponse {
-	/** 検証が成功したかどうか */
+	/** Whether the verification was successful */
 	success: boolean;
-	/** エラーメッセージ（あれば） */
+	/** Error messages (if any) */
 	'error-codes'?: string[];
 }
