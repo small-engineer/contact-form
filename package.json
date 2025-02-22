@@ -1,7 +1,8 @@
 {
-	"name": "home-page-back",
-	"version": "0.0.0",
+	"name": "contact-form-backend",
+	"version": "1.0.0",
 	"private": true,
+	"license": "MIT",
 	"scripts": {
 		"deploy": "wrangler deploy",
 		"dev": "wrangler dev",
@@ -12,10 +13,13 @@
 	"devDependencies": {
 		"@cloudflare/vitest-pool-workers": "^0.5.2",
 		"@cloudflare/workers-types": "^4.20241112.0",
+		"@jridgewell/sourcemap-codec": "^1.5.0",
+		"@rollup/plugin-inject": "^5.0.5",
 		"@types/dotenv": "^6.1.1",
 		"@types/jest": "^29.5.14",
 		"dotenv": "^16.4.5",
 		"formdata-node": "^6.0.3",
+		"glob": "^11.0.1",
 		"jest": "^29.7.0",
 		"ts-jest": "^29.2.5",
 		"typescript": "^5.5.2",
