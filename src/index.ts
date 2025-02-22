@@ -49,11 +49,11 @@ function sanitize(input: string): string {
 }
 
 /**
- * フォームデータのバリデーション
- * @param name 名前
- * @param email メールアドレス
- * @param message メッセージ
- * @returns エラーがある場合はエラーメッセージを返す
+ * Form data validation
+ * @param name Name
+ * @param email Email address
+ * @param message Message
+ * @returns Error message if validation fails
  */
 function validateFormData(name: string, email: string, message: string): string | null {
 	if (!name || name.length > 50) return 'Invalid name';
@@ -63,16 +63,15 @@ function validateFormData(name: string, email: string, message: string): string 
 }
 
 /**
- * Fetchイベントハンドラ
- * @param request リクエストオブジェクト
- * @param env 環境変数
- * @returns レスポンス
+ * Fetch event handler
+ * @param request Request object
+ * @param env Environment variables
+ * @returns Response
  */
 export default {
 	async fetch(request: Request, env: any): Promise<Response> {
 		const origin = request.headers.get('Origin') || null;
 
-		// OPTIONSリクエストの事前検証
 		if (request.method === 'OPTIONS') {
 			return new Response(null, {
 				status: 204,
@@ -80,20 +79,17 @@ export default {
 			});
 		}
 
-		// POST以外のリクエストは許可しない
 		if (request.method !== 'POST') {
 			console.error('Method not allowed', { method: request.method });
 			return jsonResponse({ error: 'Method not allowed' }, 405, origin);
 		}
 
-		// Content-Typeの検証
 		const contentType = request.headers.get('Content-Type') || '';
 		if (!contentType.includes('multipart/form-data')) {
 			console.error('Invalid content type', { contentType });
 			return jsonResponse({ error: 'Invalid content type' }, 400, origin);
 		}
 
-		// フォームデータの処理
 		try {
 			const formData = await request.formData();
 			const name = sanitize(formData.get('name')?.toString() || '');
@@ -102,20 +98,17 @@ export default {
 			const corporateName = sanitize(formData.get('intra_name')?.toString() || '');
 			const turnstileToken = formData.get('cf-turnstile-response')?.toString();
 
-			// 必須フィールドの検証
 			if (!name || !email || !message || !turnstileToken) {
 				console.error('Missing required fields', { name, email, message, turnstileToken });
 				return jsonResponse({ error: 'Missing required fields' }, 400, origin);
 			}
 
-			// 入力内容のバリデーション
 			const validationError = validateFormData(name, email, message);
 			if (validationError) {
 				console.error('Validation error:', validationError);
 				return jsonResponse({ error: validationError }, 400, origin);
 			}
 
-			// Turnstileトークンの検証
 			const isValid = await verifyTurnstileToken(turnstileToken, env.TURNSTILE_SECRET_KEY);
 			if (!isValid.success) {
 				console.error('Turnstile verification failed', {
@@ -125,7 +118,6 @@ export default {
 				return jsonResponse({ error: 'Turnstile verification failed' }, 403, origin);
 			}
 
-			// Discordへの通知
 			const success = await sendToDiscord(env.DISCORD_WEBHOOK_URL, { name, email, message, corporateName });
 			if (!success) {
 				console.error('Failed to send to Discord', { name, email, message, corporateName });
