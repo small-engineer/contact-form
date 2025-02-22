@@ -89,6 +89,70 @@ POST / (Root Endpoint)
 | 500        | `Failed to send message`       | Discord webhook error |
 | 500        | `Internal Server Error`        | Unexpected server error |
 
+## Frontend Integration
+
+Add the following script to your frontend to handle form submissions:
+
+```html
+<script>
+    const errorMessages = {
+      name: "Invalid name. Please enter up to 50 characters.",
+      email: "Invalid email format.",
+      message: "Invalid message. Please enter up to 500 characters.",
+      default: "An error occurred while submitting the form. Please contact us at: <br> Email: your_email@mail.com",
+    };
+
+    async function handleFormSubmit(event) {
+        event.preventDefault();
+        const form = event.target;
+        const formData = new FormData(form);
+        const errorMessageDiv = form.querySelector(".error-message");
+        errorMessageDiv.innerHTML = "";
+
+        try {
+            const response = await fetch(
+                "https://contact-form-backend.kalytero.workers.dev/",
+                {
+                    method: "POST",
+                    body: formData,
+                }
+            );
+
+            const responseData = await response.json();
+
+            if (response.ok && responseData.message === "Form submitted successfully!") {
+                errorMessageDiv.innerHTML = "";
+                errorMessageDiv.style.display = "none";
+                window.location.href = "/submission-complete/";
+            } else {
+                console.error("Error Response:", responseData);
+                let errorMessage = errorMessages.default;
+                if (responseData.error === "Invalid name") {
+                    errorMessage = errorMessages.name;
+                } else if (responseData.error === "Invalid email address") {
+                    errorMessage = errorMessages.email;
+                } else if (responseData.error === "Invalid message content") {
+                    errorMessage = errorMessages.message;
+                }
+                errorMessageDiv.innerHTML = errorMessage;
+            }
+        } catch (error) {
+            console.error("Error:", error);
+            errorMessageDiv.innerHTML = errorMessages.default;
+        }
+    }
+
+
+    document
+      .getElementById("contactFormElement")
+      .addEventListener("submit", handleFormSubmit);
+  </script>
+  <script
+    src="https://challenges.cloudflare.com/turnstile/v0/api.js"
+    async
+    defer></script>
+```
+
 ## Development
 
 To test locally:
