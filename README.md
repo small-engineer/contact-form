@@ -1,4 +1,4 @@
-# Contact Form Backend
+# Contact Form Backend (Cloudflare Workers based)
 
 This is a Cloudflare Workers backend for handling contact form submissions with validation, CAPTCHA verification (Turnstile), and Discord webhook integration.
 
