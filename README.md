@@ -20,7 +20,7 @@ This is a Cloudflare Workers backend for handling contact form submissions with 
 Clone the repository:
 
 ```sh
-git clone https://github.com/your-repo/contact-form-backend.git
+git clone https://github.com/small-engineer/contact-form.git contact-form-backend
 cd contact-form-backend
 ```
 
